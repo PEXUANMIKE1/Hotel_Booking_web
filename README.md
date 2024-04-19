@@ -7,11 +7,11 @@
   - Developed using PHP and the Laravel framework.
   - Utilizes MySQL for database management.
 # Features
-  For Administrators:
+  - For Administrators:
     - Manage rooms, invoices, users, destinations, and more.
     - Access control for different administrative tasks.
     - View detailed reports and analytics.
-  For Clients:
+  - For Clients:
     - User-friendly login and registration system.
     - Browse available rooms and destinations.
     - Easily book rooms with a simple reservation process.
