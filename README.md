@@ -1,12 +1,12 @@
-Hotel Booking Web
+# Hotel Booking Web
 
-Introduction
+# Introduction
   - This project serves as the culmination of the final graduation project for the HAUI-KTPMK15 course. It's a web application designed specifically for hotel bookings, providing users with an intuitive platform to discover and reserve accommodations.
 
-Technologies Used
+# Technologies Used
   - Developed using PHP and the Laravel framework.
   - Utilizes MySQL for database management.
-Features
+# Features
   For Administrators:
     - Manage rooms, invoices, users, destinations, and more.
     - Access control for different administrative tasks.
@@ -18,4 +18,4 @@ Features
     - Flexible payment options, including cash and online payments.
     - Access booking history and manage personal information.
 
---Create by Vũ Phi Trường HAUI KTPMK15
+--Create by Vũ Phi Trường HAUI KTPMK15--
