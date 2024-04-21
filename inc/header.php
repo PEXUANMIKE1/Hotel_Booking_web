@@ -7,19 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active me-2" aria-current="page" href="#">Home</a>
+          <a class="nav-link active me-2" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2" href="#">Rooms</a>
+          <a class="nav-link me-2" href="rooms.php">Rooms</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2" href="#">Facilities</a>
+          <a class="nav-link me-2" href="facilities.php">Facilities</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2" href="#">Contact Us</a>
+          <a class="nav-link me-2" href="contact.php">Contact Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2" href="#">About</a>
+          <a class="nav-link me-2" href="about.php">About</a>
         </li>
       </ul>
       <div class="d-flex">
@@ -101,7 +101,7 @@
                   <textarea class="form-control shadow-none" rows="1"></textarea>
               </div>
               <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Pin code</label>
+                  <label class="form-label">CCCD</label>
                   <input type="number" class="form-control shadow-none">
               </div>
               <div class="col-md-6 p-0 mb-3">
