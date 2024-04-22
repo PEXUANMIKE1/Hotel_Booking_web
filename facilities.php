@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyHotel - Facilities</title>
-  <?php require('inc/link.php'); ?>
+  <?php require('inc/links.php'); ?>
   <style>
     .pop:hover{
       border-top-color: var(--teal) !important;

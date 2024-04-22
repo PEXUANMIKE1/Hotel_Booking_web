@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyHotel - About</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <?php require('inc/link.php'); ?>
+  <?php require('inc/links.php'); ?>
   <style>
     .box{
       border-top-color: var(--teal) !important;
