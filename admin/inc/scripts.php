@@ -12,5 +12,6 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
       </div>
     `;
     document.body.append(element);
-  }
+  };
+
 </script>
