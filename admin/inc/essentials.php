@@ -2,10 +2,12 @@
   //frontend purpose data
   define('SITE_URL','http://127.0.0.1:90/BookingHotel/');
   define('ABOUT_IMG_PATH',SITE_URL.'Images/about/');
+  define('CAROUSEL_IMG_PATH',SITE_URL.'Images/carousel/');
 
   //backend upload purpose data
   define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/BookingHotel/Images/');
   define('ABOUT_FOLDER','about/');
+  define('CAROUSEL_FOLDER','carousel/');
 
   function adminLogin(){
     session_start();
@@ -53,7 +55,6 @@ alert;
       }
     }
   }
-
   function deleteImage($image,$folder){
 
     if(unlink(UPLOAD_IMAGE_PATH.$folder.$image)){

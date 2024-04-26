@@ -41,7 +41,7 @@
     </form>
   </div>
 
-    <?php
+  <?php
       if(isset($_POST['login']))
       {
         $frm_data = filteration($_POST);
