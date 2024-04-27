@@ -87,7 +87,7 @@
           <h5 class="mt-2">Lionel Messi</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="Images/about/IMG_17352.jpg" class="w-100" height="550px">
+          <img src="Images/about/IMG_74372.jpg" class="w-100" height="550px">
           <h5 class="mt-2">Jame Lake</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">

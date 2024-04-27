@@ -78,7 +78,7 @@
       echo <<<data
         <div class="col-md-2 mb-3">
           <div class="card bg-dark text-white">
-            <img src="$path$row[picture]" class="card-img">
+            <img src="$path$row[picture]" class="card-img" style="height:300px;">
             <div class="card-img-overlay text-end">
               <button type="button" onclick="rem_member($row[sr_no])" class="btn btn-danger btn-sm shadow-none">
                 <i class="bi bi-trash"></i> Delete
