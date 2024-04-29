@@ -4,12 +4,14 @@
   define('ABOUT_IMG_PATH',SITE_URL.'Images/about/');
   define('CAROUSEL_IMG_PATH',SITE_URL.'Images/carousel/');
   define('FACILITIES_IMG_PATH',SITE_URL.'Images/facilities/');
+  define('ROOMS_IMG_PATH',SITE_URL.'Images/rooms/');
 
   //backend upload purpose data
   define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/BookingHotel/Images/');
   define('ABOUT_FOLDER','about/');
   define('CAROUSEL_FOLDER','carousel/');
   define('FACILITIES_FOLDER','facilities/');
+  define('ROOMS_FOLDER','rooms/');
 
   function adminLogin(){
     session_start();
