@@ -262,6 +262,20 @@
     }
   }
 
+  if(isset($_POST['thumb_image']))
+  {
+    $frm_data = filteration($_POST);
+
+    $pre_q = "UPDATE `room_images` SET `thumb`=? WHERE `room_id`=?";
+    $pre_v = [0,$frm_data['room_id']];
+    $pre_res = update($pre_q,$pre_v,'ii');
+
+    $q = "UPDATE `room_images` SET `thumb`=? WHERE `sr_no`=? AND `room_id`=?";
+    $v = [1,$frm_data['image_id'],$frm_data['room_id']];
+    $res = update($q,$v,'iii');
+    echo $res;
+  }
+
   if(isset($_POST['remove_room']))
   {
     $frm_data = filteration($_POST);
