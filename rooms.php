@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyHotel - Rooms</title>
   <?php require('inc/links.php'); ?>
 </head>
+
 <body class="bg-light">
 
   <?php require('inc/header.php'); ?>
@@ -74,48 +76,47 @@
       </div>
       <div class="col-lg-9 col-md-12 px-4">
 
-        <?php 
-          $room_res = select("SELECT * FROM `rooms` WHERE `status`=? AND `removed`=? ORDER BY `id` DESC",[1,0],'ii');
-          while($room_data = mysqli_fetch_assoc($room_res))
-          {
-            // get features of room
-            $fea_q = mysqli_query($con,"SELECT f.name FROM `features` f 
+        <?php
+        $room_res = select("SELECT * FROM `rooms` WHERE `status`=? AND `removed`=? ORDER BY `id` DESC", [1, 0], 'ii');
+        while ($room_data = mysqli_fetch_assoc($room_res)) {
+          // get features of room
+          $fea_q = mysqli_query($con, "SELECT f.name FROM `features` f 
             INNER JOIN `room_features` rfe ON f.id = rfe.features_id 
             WHERE rfe.room_id ='$room_data[id]'");
-            
-            $features_data = "";
-            while($fea_row = mysqli_fetch_assoc($fea_q)){
-              $features_data .=
+
+          $features_data = "";
+          while ($fea_row = mysqli_fetch_assoc($fea_q)) {
+            $features_data .=
               "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
                 $fea_row[name]
               </span>";
-            }
+          }
 
-            //get facilities of room
-            $fac_q=mysqli_query($con,"SELECT f.name FROM `facilities` f 
+          //get facilities of room
+          $fac_q = mysqli_query($con, "SELECT f.name FROM `facilities` f 
             INNER JOIN `room_facilities` rfe ON f.id = rfe.facilities_id 
             WHERE rfe.room_id ='$room_data[id]'");
 
-            $facilities_data = "";
-            while($fac_row = mysqli_fetch_assoc($fac_q)){
-              $facilities_data .=
+          $facilities_data = "";
+          while ($fac_row = mysqli_fetch_assoc($fac_q)) {
+            $facilities_data .=
               "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
                   $fac_row[name]
               </span>";
-            }
+          }
 
-            //get thumbnail of image
-            $room_thumb = ROOMS_IMG_PATH."thumbnail.jpg";
-            $thumb_q = mysqli_query($con,"SELECT * FROM `room_images` 
+          //get thumbnail of image
+          $room_thumb = ROOMS_IMG_PATH . "thumbnail.jpg";
+          $thumb_q = mysqli_query($con, "SELECT * FROM `room_images` 
                                     WHERE `room_id`='$room_data[id]'
                                     AND `thumb`= '1'");
-            if(mysqli_num_rows($thumb_q)>0){
-              $thumb_res = mysqli_fetch_assoc($thumb_q);
-              $room_thumb = ROOMS_IMG_PATH.$thumb_res['image'];
-            }
-            $price = number_format($room_data['price'], 0, '.', ',');
-            //print room card
-            echo <<<data
+          if (mysqli_num_rows($thumb_q) > 0) {
+            $thumb_res = mysqli_fetch_assoc($thumb_q);
+            $room_thumb = ROOMS_IMG_PATH . $thumb_res['image'];
+          }
+          $price = number_format($room_data['price'], 0, '.', ',');
+          //print room card
+          echo <<<data
               <div class="card mb-4 border-0 shadow">
                 <div class="row g-0 p-3 align-items-center">
                   <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
@@ -149,15 +150,15 @@
                 </div>
               </div>    
             data;
-            
-          }
+        }
         ?>
 
       </div>
     </div>
   </div>
-  
+
   <?php require('inc/footer.php'); ?>
 
 </body>
+
 </html>

@@ -177,7 +177,7 @@
           </p>
         </div>
         <div class="mb-3">
-          <h5>Reviews $ Ratings</h5>
+          <h5>Reviews & Ratings</h5>
           <div>
             <div class="d-flex align-items-center p-4 mb-2">
               <img src="Images/about/MTP.jpg" width="30px">

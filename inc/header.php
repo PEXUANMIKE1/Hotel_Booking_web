@@ -1,16 +1,6 @@
-<?php 
-  require('admin/inc/db_config.php');
-  require('admin/inc/essentials.php');
-
-    $contact_q = "SELECT * FROM `contact_details` WHERE `sr_no`=?";
-    $values = [1];
-    $contact_r = mysqli_fetch_assoc(select($contact_q,$values,'i'));
-    //print_r($contact_r);
-?>
-
 <div id="nav-bar" class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php">SkyHotel</a>
+    <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php"><?php echo $settings_r['site_title'] ?></a>
     <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,7 +28,7 @@
         </button>
         <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal" data-bs-target="#registerModal">
           Register
-        </button> 
+        </button>
       </div>
     </div>
   </div>
@@ -63,7 +53,7 @@
             <label class="form-label">Password</label>
             <input type="password" class="form-control shadow-none"">
           </div>
-          <div class="d-flex align-items-center justify-content-between">
+          <div class=" d-flex align-items-center justify-content-between">
             <button type="submit" class="btn btn-dark shadow-none">Login</button>
             <a href="javascript: void(0)" class="text-secondary text-decoration-none">Forgot Password</a>
           </div>
@@ -76,7 +66,7 @@
 <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form>
+      <form id="register_form">
         <div class="modal-header">
           <h5 class="modal-title d-flex align-items-center justify-content-center">
             <i class="bi bi-person-lines-fill fs-3 me-2"></i>User Register
@@ -91,40 +81,40 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Full Name</label>
-                  <input type="text" class="form-control shadow-none">
+                <label class="form-label">Full Name</label>
+                <input name="name" type="text" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 p-0 mb-3">
-                  <label class="form-label">Email address</label>
-                  <input type="email" class="form-control shadow-none">
+                <label class="form-label">Email address</label>
+                <input name="email" type="email" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Phone number</label>
-                  <input type="number" class="form-control shadow-none">
+                <label class="form-label">Phone number</label>
+                <input name="phonenum" type="number" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 p-0 mb-3">
-                  <label class="form-label">Image</label>
-                  <input type="file" class="form-control shadow-none">
+                <label class="form-label">Image</label>
+                <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
               </div>
               <div class="col-md-12 p-0 mb-3">
-                  <label class="form-label">Address</label>
-                  <textarea class="form-control shadow-none" rows="1"></textarea>
+                <label class="form-label">Address</label>
+                <textarea name="address" class="form-control shadow-none" rows="1" required></textarea>
               </div>
               <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">CCCD</label>
-                  <input type="number" class="form-control shadow-none">
+                <label class="form-label">CCCD</label>
+                <input name="cccd" type="number" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 p-0 mb-3">
-                  <label class="form-label">Date of birth</label>
-                  <input type="date" class="form-control shadow-none">
+                <label class="form-label">Date of birth</label>
+                <input name="dob" type="date" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Password</label>
-                  <input type="password" class="form-control shadow-none">
+                <label class="form-label">Password</label>
+                <input name="pass" type="password" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 p-0 mb-3">
-                  <label class="form-label">Confirm Password</label>
-                  <input type="password" class="form-control shadow-none">
+                <label class="form-label">Confirm Password</label>
+                <input name="cpass" type="password" class="form-control shadow-none" required>
               </div>
             </div>
           </div>
