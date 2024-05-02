@@ -11,7 +11,6 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     `;
-
     if(position=='body'){
       document.body.append(element);
       element.classList.add('custom-alert');
@@ -22,7 +21,10 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
   }
   function remAlert(){
     document.getElementsByClassName('alert')[0].remove();
+
+    document.body.append(element);
   }
+
   function setActive()
   {
     let navbar = document.getElementById('dashboard-menu');

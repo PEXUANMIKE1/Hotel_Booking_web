@@ -14,9 +14,12 @@ define('FACILITIES_FOLDER', 'facilities/');
 define('ROOMS_FOLDER', 'rooms/');
 define('USERS_FOLDER', 'users/');
 
-// sendgrid api key
+$config = parse_ini_file('C:/xampp/htdocs/file.ini');
 
-define('SENDGRID_API_KEY',"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");
+// Lấy giá trị của key 'api_key'
+$SENDGRID_API_KEY = $config['api_key'];
+
+define('SENDGRID_API_KEY',$SENDGRID_API_KEY);
 function adminLogin()
 {
   session_start();
