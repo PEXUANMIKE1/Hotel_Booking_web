@@ -5,6 +5,7 @@ define('ABOUT_IMG_PATH', SITE_URL . 'Images/about/');
 define('CAROUSEL_IMG_PATH', SITE_URL . 'Images/carousel/');
 define('FACILITIES_IMG_PATH', SITE_URL . 'Images/facilities/');
 define('ROOMS_IMG_PATH', SITE_URL . 'Images/rooms/');
+define('USERS_IMG_PATH', SITE_URL . 'Images/users/');
 
 //backend upload purpose data
 define('UPLOAD_IMAGE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/BookingHotel/Images/');
@@ -20,6 +21,8 @@ $config = parse_ini_file('C:/xampp/htdocs/file.ini');
 $SENDGRID_API_KEY = $config['api_key'];
 
 define('SENDGRID_API_KEY',$SENDGRID_API_KEY);
+define('SENDGRID_EMAIL',"truongphisky@gmail.com");
+define('SENDGRID_NAME',"SkyHotel");
 function adminLogin()
 {
   session_start();

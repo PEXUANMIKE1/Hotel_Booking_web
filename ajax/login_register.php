@@ -6,7 +6,7 @@ require("../inc/sendgrid/sendgrid-php.php");
 function sendMail($uemail, $name, $token)
 {
   $email = new \SendGrid\Mail\Mail();
-  $email->setFrom("truongphisky@gmail.com", "SkyHotel");
+  $email->setFrom(SENDGRID_EMAIL, SENDGRID_NAME);
   $email->setSubject("Account Verification Link");
 
   $email->addTo($uemail, $name);
@@ -14,7 +14,7 @@ function sendMail($uemail, $name, $token)
   $email->addContent(
     "text/html",
     "Click the link to confirm your email:<br>
-    <a href='".SITE_URL."email_confirm.php?email_confirmation&email=$uemail&token=$token"."'>
+    <a href='" . SITE_URL . "email_confirm.php?email_confirmation&email=$uemail&token=$token" . "'>
       CLICK ME
     </a>
     "
@@ -28,7 +28,8 @@ function sendMail($uemail, $name, $token)
   }
 }
 
-if (isset($_POST['register'])) {
+if (isset($_POST['register'])) 
+{
   $data = filteration($_POST);
 
   //ktra xác nhận password
@@ -85,5 +86,41 @@ if (isset($_POST['register'])) {
     echo 1;
   } else {
     echo 'ins_failed';
+  }
+}
+
+if (isset($_POST['login'])) 
+{
+  $data = filteration($_POST);
+
+  $u_exist = select(
+    "SELECT * FROM `user_cred` 
+     WHERE `email`=? OR `phonenum`=? LIMIT 1",
+    [$data['email_phone'], $data['email_phone']],'ss');
+
+  if (mysqli_num_rows($u_exist) == 0) {
+    echo 'inv_email_mob';
+  }
+  else{
+    $u_fetch = mysqli_fetch_assoc($u_exist);
+    if($u_fetch['is_verified']==0){
+      echo 'not_verified';
+    }
+    else if($u_fetch['status']==0){
+      echo 'inactive';
+    }
+    else{
+      if(!password_verify($data['pass'],$u_fetch['password'])){
+        echo 'invalid_pass';
+      }else{
+        session_start();
+        $_SESSION['login'] = true;
+        $_SESSION['uId'] = $u_fetch['id'];
+        $_SESSION['uName'] = $u_fetch['name'];
+        $_SESSION['uPic'] = $u_fetch['profile'];
+        $_SESSION['uPhone'] = $u_fetch['phonenum'];
+        echo 1;
+      }
+    }
   }
 }

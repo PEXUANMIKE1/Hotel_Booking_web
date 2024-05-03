@@ -59,14 +59,14 @@ if (isset($_POST['get_all_rooms'])) {
 
   while ($row = mysqli_fetch_assoc($res)) {
     if ($row['status'] == 1) {
-      $status = "<button onclick='toggle_status($row[id],0)' class='btn btn-dark btn-sm shadow-none'>active</button>";
+      $status = "<button onclick='toggle_status($row[id],0)' class='btn btn-success btn-sm shadow-none'>active</button>";
     } else {
       $status = "<button onclick='toggle_status($row[id],1)' class='btn btn-warning btn-sm shadow-none'>inactive</button>";
     }
     $data .= "
         <tr class='align-middle'>
           <td>$i</td>
-          <td>$row[name]</td>
+          <td><b>$row[name]</b></td>
           <td>$row[area] m²</td>
           <td>
             <span class='badge rounded-pill bg-light text-dark'>

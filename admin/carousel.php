@@ -25,7 +25,7 @@
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h5 class="card-title m-0">Images</h5>
-              <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#carousel-s">
+              <button type="button" class="btn custom-bg shadow-none btn-sm text-light" data-bs-toggle="modal" data-bs-target="#carousel-s">
                 <i class="bi bi-plus-square"></i> Add
               </button>
             </div>

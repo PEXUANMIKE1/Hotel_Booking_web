@@ -26,7 +26,7 @@
 
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h5 class="card-title m-0">Features</h5>
-              <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#feature-s">
+              <button type="button" class="btn custom-bg shadow-none btn-sm text-light" data-bs-toggle="modal" data-bs-target="#feature-s">
                 <i class="bi bi-plus-square"></i> Add
               </button>
             </div>
@@ -34,7 +34,7 @@
             <div class="table-responsive-md" style="height: 250px; overflow-y: scroll;">
               <table class="table table-hover border">
                 <thead>
-                  <tr class="bg-dark text-light">
+                  <tr class="bg-info text-light">
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Action</th>
@@ -54,7 +54,7 @@
 
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h5 class="card-title m-0">Facilities</h5>
-              <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#facility-s">
+              <button type="button" class="btn custom-bg shadow-none btn-sm text-light" data-bs-toggle="modal" data-bs-target="#facility-s">
                 <i class="bi bi-plus-square"></i> Add
               </button>
             </div>
@@ -62,7 +62,7 @@
             <div class="table-responsive-md" style="height: 350px; overflow-y: scroll;">
               <table class="table table-hover border">
                 <thead>
-                  <tr class="bg-dark text-light">
+                  <tr class="bg-info text-light">
                     <th scope="col">#</th>
                     <th scope="col">Icon</th>
                     <th scope="col">Name</th>

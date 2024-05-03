@@ -86,7 +86,7 @@
             <div class="table-responsive-md" style="height: 350px; overflow-y: scroll;">
               <table class="table table-hover">
                 <thead class="sticky-top">
-                  <tr class="bg-dark text-light">
+                  <tr class="bg-info text-light">
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
