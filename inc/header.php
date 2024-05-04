@@ -157,7 +157,7 @@
       <form id="forgot-form">
         <div class="modal-header">
           <h5 class="modal-title d-flex align-items-center justify-content-center">
-            <i class="bi bi-person-circle fs-3 me-2"></i> Forgot Login
+            <i class="bi bi-person-circle fs-3 me-2"></i> Forgot Password
           </h5>
         </div>
         <div class="modal-body">
@@ -166,7 +166,7 @@
           </span>
           <div class="mb-4">
             <label class="form-label">Email</label>
-            <input type="text" name="email_phone" class="form-control shadow-none">
+            <input type="text" name="email" class="form-control shadow-none">
           </div>
           <div class="mb-2 text-end">
             <button type="button" class="btn shadow-none p-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal"  data-bs-dismiss="modal">

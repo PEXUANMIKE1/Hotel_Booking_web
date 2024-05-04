@@ -3,18 +3,30 @@
 require('../admin/inc/db_config.php');
 require('../admin/inc/essentials.php');
 require("../inc/sendgrid/sendgrid-php.php");
-function sendMail($uemail, $name, $token)
+date_default_timezone_get();
+
+function sendMail($uemail, $token, $type)
 {
+  if ($type == "email_confirmation") {
+    $page = 'email_confirm.php';
+    $subject = "Account Verification Link";
+    $content = "confirm your email";
+  } else {
+    $page = 'index.php';
+    $subject = "Account Reset Link";
+    $content = "reset your account";
+  }
+
   $email = new \SendGrid\Mail\Mail();
   $email->setFrom(SENDGRID_EMAIL, SENDGRID_NAME);
-  $email->setSubject("Account Verification Link");
+  $email->setSubject($subject);
 
-  $email->addTo($uemail, $name);
+  $email->addTo($uemail);
 
   $email->addContent(
     "text/html",
-    "Click the link to confirm your email:<br>
-    <a href='" . SITE_URL . "email_confirm.php?email_confirmation&email=$uemail&token=$token" . "'>
+    "Click the link to $content:<br>
+    <a href='" . SITE_URL . "$page?$type&email=$uemail&token=$token" . "'>
       CLICK ME
     </a>
     "
@@ -28,8 +40,7 @@ function sendMail($uemail, $name, $token)
   }
 }
 
-if (isset($_POST['register'])) 
-{
+if (isset($_POST['register'])) {
   $data = filteration($_POST);
 
   //ktra xác nhận password
@@ -66,7 +77,7 @@ if (isset($_POST['register']))
 
   $token = bin2hex(random_bytes(16)); //tạo mã token random 16 ký tự
 
-  if (!sendMail($data['email'], $data['name'], $token)) {
+  if (!sendMail($data['email'], $token, 'email_confirmation')) {
     echo 'mail_failed';
     exit;
   }
@@ -89,30 +100,28 @@ if (isset($_POST['register']))
   }
 }
 
-if (isset($_POST['login'])) 
-{
+if (isset($_POST['login'])) {
   $data = filteration($_POST);
 
   $u_exist = select(
     "SELECT * FROM `user_cred` 
      WHERE `email`=? OR `phonenum`=? LIMIT 1",
-    [$data['email_phone'], $data['email_phone']],'ss');
+    [$data['email_phone'], $data['email_phone']],
+    'ss'
+  );
 
   if (mysqli_num_rows($u_exist) == 0) {
     echo 'inv_email_mob';
-  }
-  else{
+  } else {
     $u_fetch = mysqli_fetch_assoc($u_exist);
-    if($u_fetch['is_verified']==0){
+    if ($u_fetch['is_verified'] == 0) {
       echo 'not_verified';
-    }
-    else if($u_fetch['status']==0){
+    } else if ($u_fetch['status'] == 0) {
       echo 'inactive';
-    }
-    else{
-      if(!password_verify($data['pass'],$u_fetch['password'])){
+    } else {
+      if (!password_verify($data['pass'], $u_fetch['password'])) {
         echo 'invalid_pass';
-      }else{
+      } else {
         session_start();
         $_SESSION['login'] = true;
         $_SESSION['uId'] = $u_fetch['id'];
@@ -122,5 +131,62 @@ if (isset($_POST['login']))
         echo 1;
       }
     }
+  }
+}
+
+if (isset($_POST['forgot_pass'])) {
+  $data = filteration($_POST);
+
+  $u_exist = select(
+    "SELECT * FROM `user_cred`
+     WHERE `email`=? LIMIT 1",
+    [$data['email']],
+    's'
+  );
+
+  if (mysqli_num_rows($u_exist) == 0) {
+    echo 'inv_email';
+  } else {
+    $u_fetch = mysqli_fetch_assoc($u_exist);
+    if ($u_fetch['is_verified'] == 0) {
+      echo 'not_verified';
+    } else if ($u_fetch['status'] == 0) {
+      echo 'inactive';
+    } else {
+      //send reset pass by link to email
+      $token = bin2hex(random_bytes(16));
+      if (!sendMail($data['email'], $token, 'account_recovery')) {
+        echo 'mail_failed';
+      } else {
+        //năm/tháng/ngày
+        $date = date("Y-m-d");
+
+        $query = mysqli_query($con, "UPDATE `user_cred`
+            SET `token`='$token', `t_exprie`='$date' 
+            WHERE `id`='$u_fetch[id]'");
+        if ($query) {
+          echo 1;
+        } else {
+          echo 'upd_failed';
+        }
+      }
+    }
+  }
+}
+
+if (isset($_POST['recover_user'])) 
+{
+  $data = filteration($_POST);
+  $enc_pass = password_hash($data['pass'],PASSWORD_BCRYPT);
+  $query = "UPDATE `user_cred` SET `password`=?, `token`=?, `t_exprie`=? 
+    WHERE `email`=? AND `token`=?";
+    
+  $values = [$enc_pass,null,null,$data['email'],$data['token']];
+
+  if(update($query,$values,'sssss')){
+    echo 1;
+  }
+  else{
+    echo 'failed';
   }
 }
