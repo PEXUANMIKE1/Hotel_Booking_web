@@ -5,7 +5,7 @@
 <?php
 
 session_start();
-date_default_timezone_get();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 require('admin/inc/db_config.php');
 require('admin/inc/essentials.php');
@@ -15,5 +15,14 @@ $settings_q = "SELECT * FROM `settings` WHERE `sr_no`=?";
 $values = [1];
 $contact_r = mysqli_fetch_assoc(select($contact_q, $values, 'i'));
 $settings_r = mysqli_fetch_assoc(select($settings_q, $values, 'i'));
-//print_r($contact_r);
+
+
+if($settings_r['shutdown']){
+  echo<<<alertbar
+    <div class='bg-danger text-center p-2 fw-bold'>
+    <i class="bi bi-exclamation-triangle-fill"></i>
+      Chức năng đặt phòng đang được bảo trì! Xin lỗi vì sự bất tiện này!
+    </div>
+  alertbar;
+}
 ?>

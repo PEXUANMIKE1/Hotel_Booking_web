@@ -23,6 +23,9 @@ $SENDGRID_API_KEY = $config['api_key'];
 define('SENDGRID_API_KEY',$SENDGRID_API_KEY);
 define('SENDGRID_EMAIL',"truongphisky@gmail.com");
 define('SENDGRID_NAME',"SkyHotel");
+
+
+// trạng thái đặt phòng paid is full, deposit ,Pending 
 function adminLogin()
 {
   session_start();

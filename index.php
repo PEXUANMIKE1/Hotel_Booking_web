@@ -148,7 +148,19 @@
           $thumb_res = mysqli_fetch_assoc($thumb_q);
           $room_thumb = ROOMS_IMG_PATH . $thumb_res['image'];
         }
-        $price = number_format($room_data['price'], 0, '.', ',');
+
+        $book_btn = "";
+
+        if (!$settings_r['shutdown']) {
+          $login = 0;
+          if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+            $login = 1;
+          }
+          
+          $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Book Now</button>";
+        }
+
+        $price = number_format($room_data['price'], 0, '.', ','); //định dạng cho số tiền
         //print room card
         echo <<<data
             <div class="col-lg-4 col-md-6 my-3">
@@ -185,7 +197,7 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-evenly mb-2">
-                    <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
+                    $book_btn
                     <a href="room_details.php?id=$room_data[id]" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
                   </div>
                 </div>
@@ -475,8 +487,7 @@
       xhr.onload = function() {
         if (this.responseText == 'failed') {
           alert('error', "Account reset failed!");
-        }
-        else {
+        } else {
           alert('success', "Account reset Successful!");
           recovery_form.reset();
         }

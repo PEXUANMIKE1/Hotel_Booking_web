@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkyHotel - Contact</title>
   <?php require('inc/links.php'); ?>
+  <title><?php echo $settings_r['site_title'] ?> - Contact</title>
 </head>
 <body class="bg-light">
 

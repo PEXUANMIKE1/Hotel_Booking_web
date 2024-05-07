@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkyHotel - Rooms Details</title>
   <?php require('inc/links.php'); ?>
+  <title><?php echo $settings_r['site_title'] ?> - Rooms Details</title>
   <style>
     .carousel-item {
       transition: transform 1s ease, opacity .2s ease-out;
     }
-    
   </style>
 </head>
+
 <body class="bg-light">
 
   <?php require('inc/header.php'); ?>
-  <?php 
+  <?php
 
-    if(!isset($_GET['id'])){
-      redirect('rooms.php');
-    }
+  if (!isset($_GET['id'])) {
+    redirect('rooms.php');
+  }
 
-    $data = filteration($_GET);
-    $room_res = select("SELECT * FROM `rooms` WHERE `id`=? AND `status`=? AND `removed`=?",[$data['id'],1,0],'iii');
-    if(mysqli_num_rows($room_res)==0){
-      redirect('rooms.php');
-    }
-    $room_data = mysqli_fetch_assoc($room_res);
-  
+  $data = filteration($_GET);
+  $room_res = select("SELECT * FROM `rooms` WHERE `id`=? AND `status`=? AND `removed`=?", [$data['id'], 1, 0], 'iii');
+  if (mysqli_num_rows($room_res) == 0) {
+    redirect('rooms.php');
+  }
+  $room_data = mysqli_fetch_assoc($room_res);
+
   ?>
-   
+
   <div class="container">
     <div class="row">
       <div class="col-12 my-5 mb-4 px-4">
@@ -45,31 +46,27 @@
       <div class="col-lg-7 col-md-12 px-4">
         <div id="roomCarousel" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            <?php 
-              //get thumbnail of image
-              $room_img = ROOMS_IMG_PATH."thumbnail.jpg";
-              $img_q = mysqli_query($con,"SELECT * FROM `room_images` 
+            <?php
+            //get thumbnail of image
+            $room_img = ROOMS_IMG_PATH . "thumbnail.jpg";
+            $img_q = mysqli_query($con, "SELECT * FROM `room_images` 
                                       WHERE `room_id`='$room_data[id]'");
-              if(mysqli_num_rows($img_q)>0)
-              {
-                $active_class = 'active';
+            if (mysqli_num_rows($img_q) > 0) {
+              $active_class = 'active';
 
-                while($img_res = mysqli_fetch_assoc($img_q))
-                {
-                  echo"
+              while ($img_res = mysqli_fetch_assoc($img_q)) {
+                echo "
                   <div class='carousel-item $active_class'>
-                    <img src='".ROOMS_IMG_PATH.$img_res['image']."' class='d-block w-100 rounded'>
+                    <img src='" . ROOMS_IMG_PATH . $img_res['image'] . "' class='d-block w-100 rounded'>
                   </div>
                   ";
-                  $active_class='';
-                }
-                
+                $active_class = '';
               }
-              else{
-                echo"<div class='carousel-item active'>
+            } else {
+              echo "<div class='carousel-item active'>
                       <img src='$room_img' class='d-block w-100'>
                     </div>";
-              }
+            }
             ?>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel" data-bs-slide="prev">
@@ -86,12 +83,12 @@
       <div class="col-lg-5 col-md-12 px-4">
         <div class="card mb-4 border-0 shadow-sm rounded-3">
           <div class="card-body">
-            <?php 
-              $price = number_format($room_data['price'], 0, '.', ',');
-              echo<<<price
+            <?php
+            $price = number_format($room_data['price'], 0, '.', ',');
+            echo <<<price
                 <h4>$price ₫/Đêm</h4>
               price;
-              echo<<<rating
+            echo <<<rating
                 <div class="mb-3">
                   <i class="bi bi-star-fill text-warning"></i>
                   <i class="bi bi-star-fill text-warning"></i>
@@ -100,47 +97,47 @@
                   <i class="bi bi-star-half text-warning"></i>
                 </div>
               rating;
-              // features
-              $fea_q = mysqli_query($con,"SELECT f.name FROM `features` f 
+            // features
+            $fea_q = mysqli_query($con, "SELECT f.name FROM `features` f 
               INNER JOIN `room_features` rfe ON f.id = rfe.features_id 
               WHERE rfe.room_id ='$room_data[id]'");
-              
-              $features_data = "";
-              while($fea_row = mysqli_fetch_assoc($fea_q)){
-                $features_data .=
+
+            $features_data = "";
+            while ($fea_row = mysqli_fetch_assoc($fea_q)) {
+              $features_data .=
                 "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
                   $fea_row[name]
                 </span>";
-              }
+            }
 
-              echo<<<features
+            echo <<<features
                 <div class="features mb-3">
                   <h6 class="mb-1">Features</h6>
                     $features_data
                 </div>
               features;
 
-              //facilities
-              $fac_q=mysqli_query($con,"SELECT f.name FROM `facilities` f 
+            //facilities
+            $fac_q = mysqli_query($con, "SELECT f.name FROM `facilities` f 
                 INNER JOIN `room_facilities` rfe ON f.id = rfe.facilities_id 
                 WHERE rfe.room_id ='$room_data[id]'");
 
             $facilities_data = "";
-            while($fac_row = mysqli_fetch_assoc($fac_q)){
+            while ($fac_row = mysqli_fetch_assoc($fac_q)) {
               $facilities_data .=
                 "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
                     $fac_row[name]
                 </span>";
             }
 
-              echo<<<facilities
+            echo <<<facilities
                 <div class="facilities mb-3">
                   <h6 class="mb-1">Facilities</h6>
                     $facilities_data
                 </div>
               facilities;
 
-              echo<<<guests
+            echo <<<guests
                 <div class="guest mb-3">
                   <h6 class="mb-1">Guests</h6>
                   <span class="badge rounded-pill bg-light text-dark text-wrap me-1 mb-1">
@@ -150,9 +147,9 @@
                     $room_data[children] Children
                   </span>
                 </div>
-              guests;                
-            
-              echo<<<area
+              guests;
+
+            echo <<<area
                 <div class="are mb-3">
                   <h6 class="mb-1">Area</h6>
                     <span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
@@ -161,9 +158,16 @@
                 </div>
               area;
 
-              echo<<<book
-                <a href="#" class="btn w-100 text-white custom-bg shadow-none mb-1">Book Now</a>
+            if (!$settings_r['shutdown']) {
+              $login = 0;
+              if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+                $login = 1;
+              }
+              echo <<<book
+                <button onclick='checkLoginToBook($login,$room_data[id])' class="btn w-100 text-white custom-bg shadow-none mb-1">Book Now</button>
               book;
+            }
+
             ?>
           </div>
         </div>
@@ -173,7 +177,7 @@
         <div class="mb-5">
           <h5>Description</h5>
           <p>
-            <?php echo $room_data['description']?>
+            <?php echo $room_data['description'] ?>
           </p>
         </div>
         <div class="mb-3">
@@ -183,10 +187,10 @@
               <img src="Images/about/MTP.jpg" width="30px">
               <h6 class="m-0 ms-2">Sơn Tùng MTP</h6>
             </div>
-            <p> 
-            Trải nghiệm ở khách sạn này thực sự ấn tượng! 
-            Dịch vụ tận tâm, phòng nghỉ sang trọng và không gian thoải mái làm cho kỳ nghỉ của tôi trở thành một trải nghiệm đáng nhớ. 
-            Tôi rất hài lòng và sẽ quay lại vào lần sau.
+            <p>
+              Trải nghiệm ở khách sạn này thực sự ấn tượng!
+              Dịch vụ tận tâm, phòng nghỉ sang trọng và không gian thoải mái làm cho kỳ nghỉ của tôi trở thành một trải nghiệm đáng nhớ.
+              Tôi rất hài lòng và sẽ quay lại vào lần sau.
             </p>
             <div class="rating">
               <i class="bi bi-star-fill text-warning"></i>
@@ -201,7 +205,8 @@
 
     </div>
   </div>
-  
+
   <?php require('inc/footer.php'); ?>
 </body>
+
 </html>

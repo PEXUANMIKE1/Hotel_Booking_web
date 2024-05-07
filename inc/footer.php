@@ -25,7 +25,7 @@
         <i class="bi bi-instagram me-1"></i>Instagram</a><br>
 
       <div class="row">
-        <h5 class="mb-3">Payment Partner</h5>
+        <h5 class="mb-3">Payment Method</h5>
         <div class="col-md-3 mb-3">
           <img src="Images/Pay/mastercard.png" class="img-fluid" width="40px">
         </div>
@@ -33,16 +33,13 @@
           <img src="Images/Pay/visa.png" class="img-fluid" width="40px">
         </div>
         <div class="col-md-3 mb-3">
-          <img src="Images/Pay/momo.png" class="img-fluid" width="40px">
-        </div>
-        <div class="col-md-3 mb-3">
-          <img src="Images/Pay/vnpay.png" class="img-fluid" width="40px">
+          <img src="Images/Pay/tienmat.png" class="img-fluid" width="auto">
         </div>
       </div>
     </div>
     <div class="col-lg-3 p-4">
       <h5 class="mb-3">Certified by</h5>
-      <img src="Images/about/logo-dhcn.jpg" width="90px"><br>
+      <img src="Images/certificate/certificate-1.png" width="140px"><br>
     </div>
   </div>
 </div>
@@ -199,13 +196,25 @@
       }else if (this.responseText == 'upd_failed') {
         alert('error', "Account recovery failed. Server Down!");
       }else {
-        alert('success', "Reset link sent to email!");
-        forgot_form.reset();
+        let fileurl = window.location.href.split('/').pop().split('?').shift();
+        if(fileurl == 'room_details.php'){
+          window.location = window.location.href;
+        }else{
+          window.location = window.location.pathname;
+        }
       }
     }
     
     xhr.send(data);
   });
 
+  function checkLoginToBook(status,room_id){
+    if(status){
+      window.location.href='confirm_booking.php?id='+room_id;
+    }
+    else{
+      alert('error','Please login to booking room!');
+    }
+  }
   setActive()
 </script>
