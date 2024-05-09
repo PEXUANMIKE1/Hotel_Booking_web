@@ -29,7 +29,7 @@ function toggle_status(id, val) {
 }
 
 function remove_user(user_id) {
-  if (confirm("Are you sure, you want to remove this user?")) {
+  if (confirm("Bạn có chắc chắn muốn xóa người dùng này chứ?")) {
     let data = new FormData();
     data.append('user_id', user_id);
     data.append('remove_user', '');

@@ -59,9 +59,9 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
   $total = $_GET['vnp_Amount'] / 100;
   if ($_GET['vnp_ResponseCode'] == '00') {
     $upd_query = "UPDATE `booking_order` 
-        SET `booking_status`='paid in full',
+        SET `booking_status`='booked',
         `trans_id`='$_GET[vnp_TransactionNo]',`trans_amt`='$total',
-        `trans_status`='$_GET[vnp_ResponseCode]',`trans_resp_msg`='$_GET[vnp_OrderInfo]' 
+        `trans_status`='$_GET[vnp_ResponseCode]',`trans_resp_msg`='$_GET[vnp_OrderInfo] thanh cong' 
         WHERE `booking_id`='$slct_fetch[booking_id]'";
 
     mysqli_query($con, $upd_query);
@@ -69,7 +69,7 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
     $upd_query = "UPDATE `booking_order` 
         SET `booking_status`='payment failed',
         `trans_id`='$_GET[vnp_TransactionNo]',`trans_amt`='$total',
-        `trans_status`='$_GET[vnp_ResponseCode]',`trans_resp_msg`='$_GET[vnp_OrderInfo]' 
+        `trans_status`='$_GET[vnp_ResponseCode]',`trans_resp_msg`='$_GET[vnp_OrderInfo] khong thanh cong'
         WHERE `booking_id`='$slct_fetch[booking_id]'";
 
     mysqli_query($con, $upd_query);

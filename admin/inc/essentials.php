@@ -28,6 +28,7 @@ define('SENDGRID_NAME',"SkyHotel");
 // trạng thái đặt phòng paid is full, deposit ,Pending 
 function adminLogin()
 {
+  //session_name('admin_session');
   session_start();
   if (!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true)) {
     echo "<script>
