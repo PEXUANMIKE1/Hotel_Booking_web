@@ -62,7 +62,7 @@ function cancel_booking(id)
     xhr.onload = function () 
     {
       if (this.responseText == 1) {
-        alert('success', 'Booking Cancel!');
+        alert('success', 'Booking Canceled!');
         get_bookings();
       }
       else {
