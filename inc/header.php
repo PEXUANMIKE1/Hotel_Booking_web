@@ -29,7 +29,7 @@
           echo<<<data
               <div class="btn-group">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  <img src="$path$_SESSION[uPic]" style="width:50px; object-fit: cover; border-radius: 50%; height:50px;" class="me-1">
+                  <img src="$path$_SESSION[uPic]" style="width:50px; height:50px;" class="me-1 rounded-circle">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
                   <li><a class="dropdown-item" href="profile.php">Profile</a></li>
