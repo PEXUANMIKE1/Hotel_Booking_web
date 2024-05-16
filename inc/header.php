@@ -26,7 +26,7 @@
         <?php
         if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
           $path = USERS_IMG_PATH;
-          echo<<<data
+          echo <<<data
               <div class="btn-group">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                   <img src="$path$_SESSION[uPic]" style="width:50px; height:50px;" class="me-1 rounded-circle">
@@ -38,9 +38,8 @@
                 </ul>
               </div>
             data;
-        }
-        else{
-          echo<<<data
+        } else {
+          echo <<<data
             <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
               Login
             </button>
@@ -169,7 +168,7 @@
             <input type="text" name="email" class="form-control shadow-none">
           </div>
           <div class="mb-2 text-end">
-            <button type="button" class="btn shadow-none p-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal"  data-bs-dismiss="modal">
+            <button type="button" class="btn shadow-none p-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
               CANCEL
             </button>
             <button type="submit" class="btn btn-dark shadow-none">SEND LINK</button>

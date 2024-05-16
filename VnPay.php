@@ -61,6 +61,8 @@ if (isset($_POST['pay_now'])) {
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
     }
     header('Location: ' . $vnp_Url);
+
+    
     //insert payment data to database
     $frm_data = filteration($_POST);
     $query1 = "INSERT INTO `booking_order`(`user_id`, `room_id`, `check_in`, `check_out`,`order_id`) 

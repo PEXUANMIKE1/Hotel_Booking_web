@@ -156,8 +156,11 @@
           if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             $login = 1;
           }
-          
-          $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Book Now</button>";
+          if ($room_data['quantity']==0) {
+            $book_btn = "<button class='btn btn-warning btn-sm text-white shadow-none'>Sold Out</button>";
+          } else {
+            $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Book Now</button>";
+          }
         }
 
         $price = number_format($room_data['price'], 0, '.', ','); //định dạng cho số tiền

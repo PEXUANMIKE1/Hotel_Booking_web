@@ -114,7 +114,7 @@
             $thumb_res = mysqli_fetch_assoc($thumb_q);
             $room_thumb = ROOMS_IMG_PATH . $thumb_res['image'];
           }
-          
+
           $book_btn = "";
 
           if (!$settings_r['shutdown']) {
@@ -122,7 +122,11 @@
             if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
               $login = 1;
             }
-            $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm w-100 text-white custom-bg shadow-none mb-2'>Book Now</button>";
+            if ($room_data['quantity']==0) {
+              $book_btn = "<button class='btn btn-warning btn-sm w-100 text-white shadow-none mb-2'>Sold Out</button>";
+            } else {
+              $book_btn = "<button onclick='checkLoginToBook($login,$room_data[id])' class='btn btn-sm w-100 text-white custom-bg shadow-none mb-2'>Book Now</button>";
+            }
           }
 
           $price = number_format($room_data['price'], 0, '.', ',');

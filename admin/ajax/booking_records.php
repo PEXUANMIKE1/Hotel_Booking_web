@@ -15,7 +15,9 @@ if (isset($_POST['get_bookings'])) {
     INNER JOIN `booking_details` bd ON bo.booking_id = bd.booking_id
     WHERE ((bo.booking_status ='booked' AND bo.arrival = 1)
     OR(bo.booking_status = 'cancelled' AND bo.refund = 1)
-    OR(bo.booking_status = 'payment failed'))   
+    OR(bo.booking_status = 'payment failed')
+    OR(bo.booking_status = 'checked out')
+    OR(bo.booking_status = 'deposit'))   
     AND (bo.order_id LIKE ? OR bd.phonenum LIKE ? OR bd.user_name LIKE ?) 
     ORDER BY bo.booking_id DESC";
 
@@ -43,9 +45,21 @@ if (isset($_POST['get_bookings'])) {
       $status_bg = 'bg-success';
     } else if ($data['booking_status'] == 'cancelled') {
       $status_bg = 'bg-danger';
-    } else {
+    } else if ($data['booking_status'] == 'checked out') {
+      $status_bg = 'bg-secondary';
+    }else {
       $status_bg = 'bg-warning text-dark';
     }
+
+    $prepay='';
+    if($data['booking_status']=='deposit'){
+      $paid = number_format($data['prepay'], 0, '.', ',');
+      $prepay ='(50% prepayment)';
+      $bg = 'bg-warning text-dark';
+    }else{
+      $paid = number_format($data['total_pay'], 0, '.', ',');
+    }
+
     $table_data .= "
       <tr>
         <td>$i</td>
@@ -64,9 +78,11 @@ if (isset($_POST['get_bookings'])) {
           <b>Price:</b> " . number_format($data['price'], 0, '.', ',') . "₫
         </td>
         <td>
-          <b>Amount:</b> " . number_format($data['trans_amt'], 0, '.', ',') . "₫
+          <b>Check in:</b> $checkin
           <br>
-          <b>Date:</b> $date
+          <b>Check out:</b> $checkout
+          <br>
+          <b>Paid: </b>$paid ₫ $prepay
           <br>
         </td>
         <td>
@@ -119,15 +135,3 @@ if (isset($_POST['get_bookings'])) {
   echo $output;
 }
 
-
-if (isset($_POST['cancel_booking'])) {
-  $frm_data = filteration($_POST);
-
-  $query = "UPDATE `booking_order`
-            SET `booking_status` = ?,`refund`=?
-            WHERE `booking_id` = ?";
-  $value = ['cancelled', 0, $frm_data['booking_id']];
-  $res = update($query, $value, 'sii');
-
-  echo $res;
-}

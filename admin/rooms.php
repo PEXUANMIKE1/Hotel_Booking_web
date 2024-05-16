@@ -170,7 +170,7 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Quantity</label>
-                <input type="number" min="1" name="quantity" class="form-control shadow-none" required>
+                <input type="number" min="0" name="quantity" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Adult (Max.)</label>

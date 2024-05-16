@@ -96,6 +96,9 @@
             <form action="VnPay.php" method="POST" id="booking_form">
               <h6 class="mb-3">BOOKING DETAILS</h6>
               <div class="row">
+                <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+                  Note: Nếu bạn trả trước toàn bộ chi phí thì sẽ được ưu đãi hoàn trả toàn bộ tiền phòng nếu hủy booking trước ngày check-in.
+                </span>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Full Name</label>
                   <input name="name" type="text" value="<?php echo $user_data['name'] ?>" class="form-control shadow-none" required>
@@ -165,14 +168,17 @@
             pay_info.innerText = "Bạn không thể check-out cùng 1 ngày với check-in";
           } else if (data.status == 'check_out_earlier') {
             pay_info.innerText = "Ngày check-out không thể trước ngày check-in";
-          }else if (data.status == 'check_in_earlier') {
+          } else if (data.status == 'check_in_earlier') {
             pay_info.innerText = "Ngày check-in phải là từ ngày hôm nay";
-          }else if (data.status == 'unavailable') {
+          } else if (data.status == 'unavailable') {
             pay_info.innerText = "Phòng này không có sẵn cho ngày check-in này";
-          }else{
-            var pay = data.payment.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-            pay_info.innerHTML = "Số ngày: "+data.days+"<br> Tổng tiền thanh toán: "+pay;
-            pay_info.classList.replace('text-danger','text-dark');
+          } else {
+            var pay = data.payment.toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            });
+            pay_info.innerHTML = "Số ngày: " + data.days + "<br> Tổng tiền thanh toán: " + pay;
+            pay_info.classList.replace('text-danger', 'text-dark');
             booking_form.elements['pay_now'].removeAttribute('disabled');
           }
           pay_info.classList.remove('d-none');

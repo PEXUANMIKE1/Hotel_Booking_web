@@ -10,7 +10,7 @@ adminLogin();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Booking Records</title>
+  <title>Admin Panel - Checked In</title>
   <?php require('inc/links.php'); ?>
 </head>
 
@@ -20,7 +20,7 @@ adminLogin();
   <div class="container-fluid" id="main-content">
     <div class="row">
       <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-        <h3 class="mb-4">Booking Records</h3>
+        <h3 class="mb-4">Checked In</h3>
 
         <!-- features section-->
         <div class="card border-0 shadow-sm mb-4">
@@ -37,8 +37,8 @@ adminLogin();
                     <th scope="col" width="60px">#</th>
                     <th scope="col" width="350px">User Details</th>
                     <th scope="col" width="300px">Room Details</th>
-                    <th scope="col" width="350px">Booking Details</th>
-                    <th scope="col" width="200px">Status</th>
+                    <th scope="col" width="300px">Booking Details</th>
+                    <th scope="col" width="auto">Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -46,12 +46,6 @@ adminLogin();
                 </tbody>
               </table>
             </div>
-
-            <nav>
-              <ul class="pagination mt-3" id="table-pagination">
-              </ul>
-            </nav>
-
           </div>
         </div>
 
@@ -61,7 +55,7 @@ adminLogin();
 
 
   <?php require('inc/scripts.php'); ?>
-  <script src="scripts/booking_records.js"> </script>
+  <script src="scripts/checked_in.js"> </script>
 </body>
 
 </html>

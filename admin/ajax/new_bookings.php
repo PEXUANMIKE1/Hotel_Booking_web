@@ -4,21 +4,22 @@ require('../inc/db_config.php');
 require('../inc/essentials.php');
 adminLogin();
 
-if (isset($_POST['get_bookings'])) 
-{
+if (isset($_POST['get_bookings'])) {
   $frm_data = filteration($_POST);
 
   $query = "SELECT bo.*, bd.* FROM `booking_order` bo
     INNER JOIN `booking_details` bd ON bo.booking_id = bd.booking_id
     WHERE (bo.order_id LIKE ? OR bd.phonenum LIKE ? OR bd.user_name LIKE ?)
-    AND (bo.booking_status = ? AND bo.arrival = ?) ORDER BY bo.booking_id ASC";
+    AND ((bo.booking_status = ? AND bo.arrival = 0)
+          OR(bo.booking_status = ? AND bo.arrival = 0))
+    ORDER BY bo.booking_id ASC";
 
-  $res = select($query,["%$frm_data[search]%","%$frm_data[search]%","%$frm_data[search]%","booked",0],'sssss');
+  $res = select($query, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "booked", "deposit"], 'sssss');
   $i = 1;
   $table_data = "";
 
-  if(mysqli_num_rows($res)==0){
-    echo"<b>No Data Found!</b>";
+  if (mysqli_num_rows($res) == 0) {
+    echo "<b>No Data Found!</b>";
     exit;
   }
 
@@ -27,6 +28,13 @@ if (isset($_POST['get_bookings']))
     $checkin = date("d-m-Y", strtotime($data['check_in']));
     $checkout = date("d-m-Y", strtotime($data['check_out']));
 
+    $prepay='';
+    if($data['booking_status']=='deposit'){
+      $paid = number_format($data['prepay'], 0, '.', ',');
+      $prepay ='(50% prepayment)';
+    }else{
+      $paid = number_format($data['total_pay'], 0, '.', ',');
+    }
     $table_data .= "
       <tr>
         <td>$i</td>
@@ -49,7 +57,7 @@ if (isset($_POST['get_bookings']))
           <br>
           <b>Check out:</b> $checkout
           <br>
-          <b>Paid:</b> " . number_format($data['trans_amt'], 0, '.', ',') . "₫
+          <b>Paid:</b> $paid ₫ $prepay
           <br>
           <b>Date:</b> $date
           <br>
@@ -73,16 +81,43 @@ if (isset($_POST['get_bookings']))
 if (isset($_POST['assign_room'])) {
   $frm_data = filteration($_POST);
 
-  $query = "UPDATE `booking_order` bo INNER JOIN `booking_details` bd
-    ON bo.booking_id = bd.booking_id
-    SET bo.arrival = ?, bd.room_no = ?
-    WHERE bo.booking_id = ?";
 
-  $values = [1, $frm_data['room_no'], $frm_data['booking_id']];
+  // Truy vấn để lấy số lượng phòng hiện tại
+  $query_check = "SELECT ro.* FROM `rooms` ro 
+   INNER JOIN `booking_order` bo 
+   ON ro.id = bo.room_id 
+   WHERE bo.booking_id = ?";
 
-  $res = update($query, $values, 'isi');
+  $res0 = select($query_check, [$frm_data['booking_id']], 'i');
 
-  echo ($res == 2) ? 1 : 0;
+  if (mysqli_num_rows($res0) > 0) {
+    $row = mysqli_fetch_assoc($res0);
+    if ($row['quantity'] > 0) {  //nếu số lượng phòng > 0 thì mới cho phép cấp phòng
+      //update số lượng phòng
+      $query1 = "UPDATE `rooms` ro 
+                INNER JOIN `booking_order` bo 
+                ON ro.id = bo.room_id 
+                SET ro.quantity = ro.quantity - 1 
+                WHERE bo.booking_id = ?";
+
+      $res1 = update($query1, [$frm_data['booking_id']], 'i');
+
+      //cấp phát số phòng
+      $query = "UPDATE `booking_order` bo INNER JOIN `booking_details` bd
+                ON bo.booking_id = bd.booking_id
+                SET bo.arrival = ?, bd.room_no = ?
+                WHERE bo.booking_id = ?";
+
+      $res = update($query, [1, $frm_data['room_no'], $frm_data['booking_id']], 'isi');
+
+
+      echo ($res == 2) ? 1 : 0;
+    } else {
+      echo 2; // In ra 2 nếu số lượng phòng bằng 0
+    }
+  } else {
+    echo 3; //in ra 3 nếu không có dữ liệu
+  }
 }
 
 if (isset($_POST['cancel_booking'])) {
@@ -91,7 +126,7 @@ if (isset($_POST['cancel_booking'])) {
   $query = "UPDATE `booking_order`
             SET `booking_status` = ?,`refund`=?
             WHERE `booking_id` = ?";
-  $value=['cancelled', 0, $frm_data['booking_id']];
+  $value = ['cancelled', 0, $frm_data['booking_id']];
   $res = update($query, $value, 'sii');
 
   echo $res;

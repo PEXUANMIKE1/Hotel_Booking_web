@@ -29,6 +29,9 @@
                   <a class="nav-link text-dark" href="refund_bookings.php">Refund Bookings</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link text-dark" href="checked_in.php">Checked In</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link text-dark" href="booking_records.php">Booking Records</a>
                 </li>
               </ul>
