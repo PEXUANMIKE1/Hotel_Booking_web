@@ -81,12 +81,20 @@
             </form>
           </div>
         </div>
-        <div class="col-md-12 mb-5 px-4">
+        <div class="col-md-12 mb-6 px-4">
           <div class="bg-white p-3 p-md-4 rounded shadow-sm">
             <form id="pass-form">
               <h5 class="mb-3 fw-bold">Password</h5>
-
-
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Password</label>
+                  <input name="password" type="text" class="form-control shadow-none" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Confirm Password</label>
+                  <input name="password" type="text" class="form-control shadow-none" required>
+                </div>
+              </div>
               <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
             </form>
           </div>

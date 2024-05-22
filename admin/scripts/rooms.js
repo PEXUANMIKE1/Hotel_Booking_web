@@ -14,7 +14,6 @@ let add_room_form =document.getElementById('add_room_form');
       data.append('name',add_room_form.elements['name'].value);
       data.append('area',add_room_form.elements['area'].value);
       data.append('price',add_room_form.elements['price'].value);
-      data.append('quantity',add_room_form.elements['quantity'].value);
       data.append('adult',add_room_form.elements['adult'].value);
       data.append('children',add_room_form.elements['children'].value);
       data.append('desc',add_room_form.elements['desc'].value);
@@ -37,7 +36,6 @@ let add_room_form =document.getElementById('add_room_form');
 
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "ajax/rooms.php", true);
-      //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       
       xhr.onload = function(){
         console.log(this.responseText);
@@ -82,7 +80,6 @@ let add_room_form =document.getElementById('add_room_form');
         edit_room_form.elements['name'].value = data.roomdata.name;
         edit_room_form.elements['area'].value = data.roomdata.area;
         edit_room_form.elements['price'].value = data.roomdata.price;
-        edit_room_form.elements['quantity'].value = data.roomdata.quantity;
         edit_room_form.elements['adult'].value = data.roomdata.adult;
         edit_room_form.elements['children'].value = data.roomdata.children;
         edit_room_form.elements['desc'].value = data.roomdata.description;
@@ -118,7 +115,6 @@ let add_room_form =document.getElementById('add_room_form');
       data.append('name',edit_room_form.elements['name'].value);
       data.append('area',edit_room_form.elements['area'].value);
       data.append('price',edit_room_form.elements['price'].value);
-      data.append('quantity',edit_room_form.elements['quantity'].value);
       data.append('adult',edit_room_form.elements['adult'].value);
       data.append('children',edit_room_form.elements['children'].value);
       data.append('desc',edit_room_form.elements['desc'].value);

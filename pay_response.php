@@ -58,6 +58,28 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
 {
   $total = $_GET['vnp_Amount'] / 100;
   if ($_GET['vnp_ResponseCode'] == '00') {
+
+    //get room number available
+    $query0 = "SELECT * FROM `room_numbers`
+                WHERE `type_id`=? AND (`room_status`='Available' OR `room_status`='Booked' OR `room_status`='Checked In')
+                ORDER BY `room_status` ASC LIMIT 1";
+    $res = select($query0, [$slct_fetch['booking_id']], 'i');
+    $dataRoom = mysqli_fetch_assoc($res);
+
+    //update room_no
+    $query = "UPDATE `booking_details` SET `room_no`=?
+               WHERE `booking_id`=?";
+    update($query, [$dataRoom['room_no'],$slct_fetch['booking_id']], 'si');
+
+    //update room_status when booked 
+    if ($dataRoom['room_status'] == 'Available') {
+      $query3 = "UPDATE `room_numbers` 
+              SET `room_status`='Booked'
+              WHERE `id`=?";
+      update($query3, [$dataRoom['id']], 'i');
+    }
+
+    //update transaction booking
     $upd_query = "UPDATE `booking_order` 
         SET `booking_status`='booked',
         `trans_id`='$_GET[vnp_TransactionNo]',`trans_amt`='$total',
@@ -75,7 +97,7 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
     mysqli_query($con, $upd_query);
   }
 
-  redirect('pay_status.php?order=' . $_GET['vnp_TxnRef']);
+  //redirect('pay_status.php?order=' . $_GET['vnp_TxnRef']);
 } else {
   redirect('index.php');
 }

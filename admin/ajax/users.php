@@ -16,10 +16,10 @@ if (isset($_POST['get_users'])) {
       <i class='bi bi-trash'></i>
     </button>";
 
-    $vefified = "<span class='badge bg-warning'><i class='bi bi-x-lg'></i></span>";
+    $verified = "<span class='badge bg-warning'><i class='bi bi-x-lg'></i></span>";
 
     if ($row['is_verified']) {
-      $vefified = "<span class='badge bg-success'><i class='bi bi-check-lg'></i></span>";
+      $verified = "<span class='badge bg-success'><i class='bi bi-check-lg'></i></span>";
       $del_btn = "";
     }
 
@@ -45,7 +45,7 @@ if (isset($_POST['get_users'])) {
           <td>$row[phonenum]</td>
           <td>$row[address]</td>
           <td>$row[dob]</td>
-          <td>$vefified</td>
+          <td>$verified</td>
           <td>$status</td>
           <td>$date</td>
           <td>$del_btn</td>

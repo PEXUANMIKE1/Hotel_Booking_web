@@ -13,11 +13,11 @@ if (isset($_POST['get_bookings'])) {
 
   $query = "SELECT bo.*, bd.* FROM `booking_order` bo
     INNER JOIN `booking_details` bd ON bo.booking_id = bd.booking_id
-    WHERE ((bo.booking_status ='booked' AND bo.arrival = 1)
-    OR(bo.booking_status = 'cancelled' AND bo.refund = 1)
+    WHERE ((bo.booking_status ='deposit' AND bo.arrival = 1)
+    OR(bo.booking_status = 'cancelled')
     OR(bo.booking_status = 'payment failed')
     OR(bo.booking_status = 'checked out')
-    OR(bo.booking_status = 'deposit'))   
+    OR(bo.booking_status = 'full payment'))   
     AND (bo.order_id LIKE ? OR bd.phonenum LIKE ? OR bd.user_name LIKE ?) 
     ORDER BY bo.booking_id DESC";
 
@@ -45,18 +45,20 @@ if (isset($_POST['get_bookings'])) {
       $status_bg = 'bg-success';
     } else if ($data['booking_status'] == 'cancelled') {
       $status_bg = 'bg-danger';
+    } else if ($data['booking_status'] == 'full payment') {
+      $status_bg = 'bg-info';
     } else if ($data['booking_status'] == 'checked out') {
       $status_bg = 'bg-secondary';
-    }else {
+    } else {
       $status_bg = 'bg-warning text-dark';
     }
 
-    $prepay='';
-    if($data['booking_status']=='deposit'){
+    $prepay = '';
+    if ($data['prepay'] > 0) {
       $paid = number_format($data['prepay'], 0, '.', ',');
-      $prepay ='(50% prepayment)';
+      $prepay = '(50% prepayment)';
       $bg = 'bg-warning text-dark';
-    }else{
+    } else {
       $paid = number_format($data['total_pay'], 0, '.', ',');
     }
 
@@ -76,6 +78,8 @@ if (isset($_POST['get_bookings'])) {
           <b>Room:</b> $data[room_name]
           <br>
           <b>Price:</b> " . number_format($data['price'], 0, '.', ',') . "₫
+          <br>
+          <b>Room number:</b> $data[room_no]
         </td>
         <td>
           <b>Check in:</b> $checkin
@@ -134,4 +138,3 @@ if (isset($_POST['get_bookings'])) {
   $output = json_encode(["table_data" => $table_data, "pagination" => $pagination]);
   echo $output;
 }
-

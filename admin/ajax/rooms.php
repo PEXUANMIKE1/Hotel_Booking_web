@@ -11,10 +11,10 @@ if (isset($_POST['add_room'])) {
   $frm_data = filteration($_POST);
   $flag = 0;
 
-  $q1 = "INSERT INTO `rooms`( `name`, `area`, `price`, `quantity`, `adult`, `children`, `description`)VALUES (?,?,?,?,?,?,?)";
-  $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['adult'], $frm_data['children'], $frm_data['desc']];
+  $q1 = "INSERT INTO `rooms`( `name`, `area`, `price`, `adult`, `children`, `description`)VALUES (?,?,?,?,?,?)";
+  $values = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['adult'], $frm_data['children'], $frm_data['desc']];
 
-  if (insert($q1, $values, 'siiiiis')) {
+  if (insert($q1, $values, 'siiiis')) {
     $flag = 1;
   }
 
@@ -128,9 +128,9 @@ if (isset($_POST['edit_room'])) {
   $frm_data = filteration($_POST);
   $flag = 0;
 
-  $q1 = "UPDATE `rooms` SET `name`=?,`area`=?,`price`=?,`quantity`=?,`adult`=?,`children`=?,`description`=? WHERE `id`=?";
-  $value = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['quantity'], $frm_data['adult'], $frm_data['children'], $frm_data['desc'], $frm_data['room_id']];
-  if (update($q1, $value, 'siiiiisi')) {
+  $q1 = "UPDATE `rooms` SET `name`=?,`area`=?,`price`=?,`adult`=?,`children`=?,`description`=? WHERE `id`=?";
+  $value = [$frm_data['name'], $frm_data['area'], $frm_data['price'], $frm_data['adult'], $frm_data['children'], $frm_data['desc'], $frm_data['room_id']];
+  if (update($q1, $value, 'siiiisi')) {
     $flag = 1;
   }
   $del_features = delete("DELETE FROM `room_features` WHERE `room_id`=?", [$frm_data['room_id']], 'i');

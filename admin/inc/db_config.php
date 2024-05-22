@@ -52,6 +52,33 @@
       die("Query cannot be executed - Select");
     }
   }
+
+  function selectN($sql) {
+
+    global $con;
+  
+    if (!$con) {
+      die("Database connection not established. Please configure connection details in your config file.");
+    }
+  
+    // Prepare and execute the query (no need for parameters in this case)
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+      die("Failed to prepare query: " . mysqli_error($con));
+    }
+  
+    if (!mysqli_stmt_execute($stmt)) {
+      die("Query execution failed: " . mysqli_error($con));
+    }
+  
+    // Get the result set
+    $res = mysqli_stmt_get_result($stmt);
+  
+    // Close the prepared statement
+    mysqli_stmt_close($stmt);
+  
+    return $res;
+  }
   function update($sql,$values,$datatypes)
   {
     $con = $GLOBALS['con'];

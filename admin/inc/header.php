@@ -44,7 +44,24 @@
             <a class="nav-link text-dark" href="user_queries.php">User Queries</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" href="rooms.php">Rooms</a>
+            <a class="nav-link text-dark" href="review_rating.php">Review & Rating</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn text-dark px-3 w-100 shadow-none text-start border-0 d-flex align-items-center justify-content-between"
+             type="button" data-bs-toggle="collapse" data-bs-target="#roomlinks">
+              <span>Rooms</span>
+              <span><i class="bi bi-caret-down-fill"></i></span>
+            </button>
+            <div class="collapse show px-3 small mb-1" id="roomlinks">
+              <ul class="nav nav-pills flex-column rounded border border-secondary">
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="rooms.php">Room Type</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="room_number.php">Room Number</a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark" href="features_facilities.php">Features & Facilities</a>

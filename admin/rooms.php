@@ -9,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Rooms</title>
+  <title>Admin Panel - Room type</title>
   <?php require('inc/links.php'); ?>
 </head>
 <body class="bg-light">
@@ -18,7 +18,7 @@
   <div class="container-fluid" id="main-content">
     <div class="row">
       <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-        <h3 class="mb-4">ROOMS</h3>
+        <h3 class="mb-4">ROOM TYPE</h3>
 
         <!-- features section-->
         <div class="card border-0 shadow-sm mb-4">
@@ -79,10 +79,6 @@
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Price</label>
                 <input type="number" min="1" name="price" class="form-control shadow-none" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Quantity</label>
-                <input type="number" min="1" name="quantity" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Adult (Max.)</label>
@@ -167,10 +163,6 @@
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Price</label>
                 <input type="number" min="1" name="price" class="form-control shadow-none" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Quantity</label>
-                <input type="number" min="0" name="quantity" class="form-control shadow-none" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Adult (Max.)</label>

@@ -34,7 +34,7 @@ adminLogin();
               <table class="table table-hover border" style="min-width: 1200px;">
                 <thead>
                   <tr class="bg-info text-light">
-                    <th scope="col" width="60px">#</th>
+                    <th scope="col" width="auto">#</th>
                     <th scope="col" width="350px">User Details</th>
                     <th scope="col" width="300px">Room Details</th>
                     <th scope="col" width="300px">Booking Details</th>

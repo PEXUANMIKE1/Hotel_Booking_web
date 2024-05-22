@@ -62,9 +62,11 @@ if (isset($_POST['pay_now'])) {
     }
     header('Location: ' . $vnp_Url);
 
+    //insert database
+
+    $frm_data = filteration($_POST);
     
     //insert payment data to database
-    $frm_data = filteration($_POST);
     $query1 = "INSERT INTO `booking_order`(`user_id`, `room_id`, `check_in`, `check_out`,`order_id`) 
                 VALUES (?,?,?,?,?)";
     insert(
@@ -88,5 +90,6 @@ if (isset($_POST['pay_now'])) {
         ],
         'issssss'
     );
+
     die();
 }

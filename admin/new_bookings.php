@@ -43,6 +43,7 @@ adminLogin();
                     <th scope="col">User Details</th>
                     <th scope="col">Room Details</th>
                     <th scope="col">Bookings Details</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -60,33 +61,7 @@ adminLogin();
 
   <!-- Assign Room Number modal -->
 
-  <div class="modal fade" id="assign-room" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="assign_room_form">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Room Assignment</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Room Number</label>
-              <input type="text" name="room_no" class="form-control shadow-none" required>
-            </div>
-            <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
-              Note: Chỉ cấp phát số phòng khi khách hàng nhận phòng tại quầy!
-            </span>
-            <input type="hidden" name="booking_id">
-          </div>
-          <div class="modal-footer">
-            <button type="reset" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
-
-            <button type="submit" class="btn custom-bg text-white shadow-none">ASSIGN</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+  
 
   <!-- Add booking form -->
   <div class="modal fade" id="add-booking" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

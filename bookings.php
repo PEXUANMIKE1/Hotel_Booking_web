@@ -36,6 +36,7 @@
           OR(bo.booking_status = 'cancelled')
           OR(bo.booking_status = 'checked out')
           OR(bo.booking_status = 'deposit')
+          OR(bo.booking_status = 'full payment')
           OR(bo.booking_status = 'payment failed'))   
           AND (bo.user_id = ?) 
           ORDER BY bo.booking_id DESC";
@@ -69,6 +70,12 @@
                       Note: Hành động này có thể sẽ không được hoàn lại tiền.
                     </span>";
           }
+        }else if ($data['booking_status'] == 'full payment') {
+          $status_bg = "bg-info";
+          if ($data['arrival'] == 1) {
+            $btn = "<a href='generate_pdf.php?gen_pdf&id=$data[booking_id]' class='btn btn-dark btn-sm shadow-none'>Download PDF</a>
+              <button type='button' class='btn btn-dark btn-sm shadow-none'>Rate & Review</button>";
+          }
         } else if ($data['booking_status'] == 'checked out') {
           $status_bg = "bg-secondary";
           if ($data['arrival'] == 1) {
@@ -80,10 +87,14 @@
         } else if ($data['booking_status'] == 'cancelled') {
           $status_bg = "bg-danger";
 
-          if ($data['refund'] == 0) {
+          if ($data['refund'] == 0 && $data['prepay'] == 0) {
             $btn = "<span class='badge bg-primary'>Refund in process!</span>";
           } else {
-            $btn = "<a href='generate_pdf.php?gen_pdf&id=$data[booking_id]' class='btn btn-dark btn-sm shadow-none'>Download PDF</a>";
+
+            $btn = "<a href='generate_pdf.php?gen_pdf&id=$data[booking_id]' class='btn btn-dark btn-sm shadow-none'>Download PDF</a>
+                    <span class='badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base'>
+                      Note: Bạn không được hoàn lại tiền theo chính sách của chúng tôi.
+                    </span>";
           }
         } else {
           $status_bg = "bg-warning";
@@ -92,13 +103,14 @@
 
         $price_room = number_format($data['price'], 0, '.', ',');
         $price_amt = number_format($data['total_pay'], 0, '.', ',');
+        
+        $prepay = '';
+        $order_prepay = '';
+        $order_id = "<b>Order ID: </b>$data[order_id]";
 
-        $order_prepay = '<b>Order ID: </b>';
-        $prepay = $data['order_id'];
-
-        if ($data['booking_status'] == 'deposit') {
+        if ($data['prepay'] > 0) {
           $prepay = number_format($data['prepay'], 0, '.', ',');
-          $order_prepay = "<b>Prepayment 50% : </b> $prepay ₫";
+          $order_prepay = "<b>Prepayment 50% : </b> $prepay ₫ <br>";
         }
 
         echo <<<bookings
@@ -112,7 +124,8 @@
               </p>
               <p>
                 <b>Amount: </b>$price_amt ₫<br>
-                $order_prepay<br>
+                $order_prepay
+                $order_id<br>
                 <b>Date: </b>$date
               </p>
               <p>
