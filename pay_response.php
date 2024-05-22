@@ -40,7 +40,7 @@ foreach ($inputData as $key => $value) {
 }
 $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret); //mã hóa chữ ký response
 
-$slct_query = "SELECT `booking_id`, `user_id` FROM `booking_order`
+$slct_query = "SELECT `booking_id`, `user_id`,`room_id` FROM `booking_order`
                   WHERE `order_id` = '$_GET[vnp_TxnRef]'";
 $slct_res = mysqli_query($con, $slct_query);
 
@@ -60,23 +60,23 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
   if ($_GET['vnp_ResponseCode'] == '00') {
 
     //get room number available
-    $query0 = "SELECT * FROM `room_numbers`
-                WHERE `type_id`=? AND (`room_status`='Available' OR `room_status`='Booked' OR `room_status`='Checked In')
+    $query1 = "SELECT * FROM `room_numbers`
+                WHERE `type_id`='$slct_fetch[room_id]' AND (`room_status`='Available' OR `room_status`='Booked' OR `room_status`='Checked In')
                 ORDER BY `room_status` ASC LIMIT 1";
-    $res = select($query0, [$slct_fetch['booking_id']], 'i');
+    $res =  mysqli_query($con, $query1);
     $dataRoom = mysqli_fetch_assoc($res);
 
     //update room_no
-    $query = "UPDATE `booking_details` SET `room_no`=?
-               WHERE `booking_id`=?";
-    update($query, [$dataRoom['room_no'],$slct_fetch['booking_id']], 'si');
-
+    $query2 = "UPDATE `booking_details` SET `room_no`='$dataRoom[room_no]'
+               WHERE `booking_id`='$slct_fetch[booking_id]'";
+    mysqli_query($con, $query2);
     //update room_status when booked 
     if ($dataRoom['room_status'] == 'Available') {
       $query3 = "UPDATE `room_numbers` 
               SET `room_status`='Booked'
-              WHERE `id`=?";
-      update($query3, [$dataRoom['id']], 'i');
+              WHERE `id`=$dataRoom[id]";
+      //update($query3, [$dataRoom['id']], 'i');
+      mysqli_query($con, $query3);
     }
 
     //update transaction booking
@@ -96,8 +96,7 @@ if ($secureHash == $vnp_SecureHash) //so sánh 2 chữ ký giao dịch
 
     mysqli_query($con, $upd_query);
   }
-
-  //redirect('pay_status.php?order=' . $_GET['vnp_TxnRef']);
+  redirect('pay_status.php?order=' . $_GET['vnp_TxnRef']);
 } else {
   redirect('index.php');
 }
