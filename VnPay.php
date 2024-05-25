@@ -21,6 +21,10 @@ if (isset($_POST['pay_now'])) {
     $vnp_BankCode = 'VNBANK'; //Mã phương thức thanh toán
     $vnp_IpAddr = $_SERVER['REMOTE_ADDR']; //IP Khách hàng thanh toán
 
+    $msg_pay='Thanh toan tien phong';
+    if($_SESSION['room']['prepayment']){
+        $msg_pay='Coc 50% tien phong';
+    }
     $inputData = array(
         "vnp_Version" => "2.1.0",
         "vnp_TmnCode" => $vnp_TmnCode,
@@ -30,7 +34,7 @@ if (isset($_POST['pay_now'])) {
         "vnp_CurrCode" => "VND",
         "vnp_IpAddr" => $vnp_IpAddr,
         "vnp_Locale" => $vnp_Locale,
-        "vnp_OrderInfo" => "Thanh toan tien phong",
+        "vnp_OrderInfo" => $msg_pay,
         "vnp_OrderType" => "other",
         "vnp_ReturnUrl" => $vnp_Returnurl,
         "vnp_TxnRef" => $vnp_TxnRef,
@@ -67,6 +71,7 @@ if (isset($_POST['pay_now'])) {
     $frm_data = filteration($_POST);
     
     //insert payment data to database
+    //insert booking_order
     $query1 = "INSERT INTO `booking_order`(`user_id`, `room_id`, `check_in`, `check_out`,`order_id`) 
                 VALUES (?,?,?,?,?)";
     insert(
@@ -80,6 +85,7 @@ if (isset($_POST['pay_now'])) {
 
     $booking_id = mysqli_insert_id($con);
 
+    //insert booking_details
     $query2 = "INSERT INTO `booking_details`(`booking_id`, `room_name`, `price`, `total_pay`,
                 `user_name`, `phonenum`, `address`) VALUES (?,?,?,?,?,?,?)";
     insert(

@@ -94,12 +94,29 @@ if (isset($_POST['check_out'])) {
   $res0 = select($query0, [$frm_data['booking_id']], 'i');
   $data = mysqli_fetch_assoc($res0);
 
-  //update status room number
-  $query1 = "UPDATE `room_numbers`
-            SET `room_status`='Available'
-            WHERE `room_no`=?";
-  update($query1, [$data['room_no']], 'i');
+  //lấy ra số phòng và trạng thái booking của phòng muốn cập nhật
+  //nếu phòng vẫn đang có người đặt trước thì không đổi trạng thái phòng sang available khi checkout nữa
+  $query = "SELECT bo.booking_id FROM `booking_order` bo
+  INNER JOIN `booking_details` bd ON bo.booking_id = bd.booking_id
+  WHERE ((bo.booking_status ='deposit' AND bo.arrival = 0)
+  OR(bo.booking_status = 'booked'))   
+  AND bd.room_no = ?";
 
+  $res1 = select($query, [$data['room_no']], 's');
+
+  if (mysqli_num_rows($res1) != 0) {//nếu tìm thấy đang có đơn đang đặt phòng này rồi thì chuyển trạng thái phòng thành booked
+    //update status room number
+    $query1 = "UPDATE `room_numbers`
+                SET `room_status`='Booked'
+                WHERE `room_no`=?";
+    update($query1, [$data['room_no']], 's');
+  } else { //nếu không thì chuyển sang available
+    $query1 = "UPDATE `room_numbers`
+                SET `room_status`='Available'
+                WHERE `room_no`=?";
+    update($query1, [$data['room_no']], 's');
+  }
+  
   //update status booking
   $today_date = new DateTime();
   $formatted_date = $today_date->format('Y-m-d H:i:s');

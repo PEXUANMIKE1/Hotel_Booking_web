@@ -99,32 +99,47 @@
                 <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
                   Note: Nếu bạn trả trước toàn bộ chi phí thì sẽ được ưu đãi hoàn trả toàn bộ tiền phòng nếu hủy booking trước ngày check-in.
                 </span>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 fw-bold mb-3">
                   <label class="form-label">Full Name</label>
                   <input name="name" type="text" value="<?php echo $user_data['name'] ?>" class="form-control shadow-none" required>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 fw-bold mb-3">
                   <label class="form-label">Phone Number</label>
                   <input name="phonenum" type="number" value="<?php echo $user_data['phonenum'] ?>" class="form-control shadow-none" required>
                 </div>
-                <div class="col-md-12 mb-3">
+                <div class="col-md-6 fw-bold mb-3">
+                  <label class="form-label">CCCD</label>
+                  <input type="number" value="<?php echo $user_data['cccd'] ?>" class="form-control shadow-none" required>
+                </div>
+                <div class="col-md-12 fw-bold mb-3">
                   <label class="form-label">Address</label>
                   <textarea name="address" class="form-control shadow-none" rows="1" required><?php echo $user_data['address'] ?></textarea>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 fw-bold mb-3">
                   <label class="form-label">Check-in</label>
                   <input name="checkin" onchange="check_availability()" type="date" class="form-control shadow-none" required>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 fw-bold mb-4">
                   <label class="form-label">Check-out</label>
                   <input name="checkout" onchange="check_availability()" type="date" class="form-control shadow-none" required>
                 </div>
                 <div class="col-12">
+                  <label class="form-label fw-bold mt-2">Payment</label>
+                  <div class='col-md-12 mb-3'>
+                    <label>
+                      <input type='radio' onchange="check_availability()" name='payment_option' value='prepay' class='form-check-input shadow-none' required> 50% Prepayment (Not refund)
+                    </label>
+                  </div>
+                  <div class='col-md-12 mb-3'>
+                    <label>
+                      <input type='radio' onchange="check_availability()" name='payment_option' value='payfull' class='form-check-input shadow-none' required> Pay in Full
+                    </label>
+                  </div>
                   <div class="spinner-border text-info mb-3 d-none" id="info_loader" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
                   <h6 class="mb-3 text-danger" id="pay_info">Nhập ngày check-in và check-out !</h6>
-                  <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-41" disabled>Pay Now</button>
+                  <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-41 mt-3" disabled>Pay Now</button>
                 </div>
               </div>
             </form>
@@ -142,54 +157,74 @@
     let pay_info = document.getElementById('pay_info');
 
     function check_availability() {
-      let checkin_val = booking_form.elements['checkin'].value;
-      let checkout_val = booking_form.elements['checkout'].value;
+        let checkin_val = booking_form.elements['checkin'].value;
+        let checkout_val = booking_form.elements['checkout'].value;
+        let payment_option = booking_form.elements['payment_option'].value;
 
-      booking_form.elements['pay_now'].setAttribute('disabled', true);
+        booking_form.elements['pay_now'].setAttribute('disabled', true);
 
-      if (checkin_val != '' && checkout_val != '') {
-        pay_info.classList.add('d-none');
-        pay_info.classList.replace('text-dark', 'text-danger');
-        info_loader.classList.remove('d-none');
+        if (checkin_val != '' && checkout_val != '' && payment_option != '') {
+            pay_info.classList.add('d-none');
+            info_loader.classList.remove('d-none');
 
-        let data = new FormData();
+            let data = new FormData();
+            data.append('check_availability', '');
+            data.append('check_in', checkin_val);
+            data.append('check_out', checkout_val);
+            data.append('payment_option', payment_option);
 
-        data.append('check_availability', '');
-        data.append('check_in', checkin_val);
-        data.append('check_out', checkout_val);
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/confirm_booking.php", true);
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "ajax/confirm_booking.php", true);
+            xhr.onload = function() {
+                try {
+                    let data = JSON.parse(this.responseText);
 
-        xhr.onload = function() {
-          let data = JSON.parse(this.responseText);
+                    if (data.status == 'check_in_out_equal') {
+                        pay_info.innerText = "Bạn không thể check-out cùng 1 ngày với check-in";
+                        pay_info.classList.replace('text-info', 'text-danger');
+                    } else if (data.status == 'check_out_earlier') {
+                        pay_info.innerText = "Ngày check-out không thể trước ngày check-in";
+                        pay_info.classList.replace('text-info', 'text-danger');
+                    } else if (data.status == 'check_in_earlier') {
+                        pay_info.innerText = "Ngày check-in phải là từ ngày hôm nay";
+                        pay_info.classList.replace('text-info', 'text-danger');
+                    } else if (data.status == 'unavailable') {
+                        pay_info.innerText = "Phòng không có sẵn trong khoảng thời gian của bạn";
+                        pay_info.classList.replace('text-info', 'text-danger');
+                    } else if (data.status == 'available') {
+                        let pay = data.payment.toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        });
+                        pay_info.innerHTML = "Số ngày: " + data.days + "<br> Tổng tiền thanh toán: " + pay;
+                        pay_info.classList.replace('text-danger', 'text-info');
+                        booking_form.elements['pay_now'].removeAttribute('disabled');
+                    } else {
+                        pay_info.innerText = "Có lỗi xảy ra. Vui lòng thử lại.";
+                        pay_info.classList.replace('text-info', 'text-danger');
+                    }
+                } catch (e) {
+                    pay_info.innerText = "Lỗi khi phân tích phản hồi từ server: " + e.message;
+                    pay_info.classList.replace('text-info', 'text-danger');
+                }
 
-          if (data.status == 'check_in_out_equal') {
-            pay_info.innerText = "Bạn không thể check-out cùng 1 ngày với check-in";
-          } else if (data.status == 'check_out_earlier') {
-            pay_info.innerText = "Ngày check-out không thể trước ngày check-in";
-          } else if (data.status == 'check_in_earlier') {
-            pay_info.innerText = "Ngày check-in phải là từ ngày hôm nay";
-          } else if (data.status == 'unavailable') {
-            pay_info.innerText = "Phòng này không có sẵn cho ngày check-in này";
-          } else {
-            var pay = data.payment.toLocaleString('vi-VN', {
-              style: 'currency',
-              currency: 'VND'
-            });
-            pay_info.innerHTML = "Số ngày: " + data.days + "<br> Tổng tiền thanh toán: " + pay;
-            pay_info.classList.replace('text-danger', 'text-dark');
-            booking_form.elements['pay_now'].removeAttribute('disabled');
-          }
-          pay_info.classList.remove('d-none');
-          info_loader.classList.add('d-none');
+                pay_info.classList.remove('d-none');
+                info_loader.classList.add('d-none');
+            };
 
+            xhr.onerror = function() {
+                pay_info.innerText = "Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.";
+                pay_info.classList.replace('text-info', 'text-danger');
+                pay_info.classList.remove('d-none');
+                info_loader.classList.add('d-none');
+            };
+
+            xhr.send(data);
         }
-
-        xhr.send(data);
-      }
     }
-  </script>
+</script>
+
 </body>
 
 </html>

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php require('inc/links.php'); ?>
-  <title><?php echo $settings_r['site_title'] ?> - Confirm Booking</title>
+  <title><?php echo $settings_r['site_title'] ?> - Bookings</title>
 
 </head>
 
@@ -118,6 +118,7 @@
             <div class='bg-white p-3 rounded shadow-sm'>
               <h5 class='fw-bold'>$data[room_name]</h5>
               <p>$price_room ₫/Đêm</p>
+              <p><b>Room number: $data[room_no]</b><br></p>
               <p>
                 <b>Check in: </b>$checkin<br>
                 <b>Check out: </b>$checkout

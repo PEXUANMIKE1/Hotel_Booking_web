@@ -47,6 +47,7 @@ if (isset($_POST['check_availability'])) {
     echo $result;
   }
 }
+
 if (isset($_POST['add_room'])) {
   $features = filteration(json_decode($_POST['features']));
   $facilities = filteration(json_decode($_POST['facilities']));

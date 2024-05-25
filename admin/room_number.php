@@ -45,6 +45,9 @@ adminLogin();
               <button type="button" onclick="get_rooms('Luxury Room')" class="btn btn-success shadow-none btn-sm text-light">
                 Luxury Room
               </button>
+              <button type="button" onclick="get_rooms('Supper Simple Room')" class="btn btn-success shadow-none btn-sm text-light">
+                Supper Simple Room
+              </button>
             </div>
             <!-- room card -->
             <div class="row" id="room_card">             
