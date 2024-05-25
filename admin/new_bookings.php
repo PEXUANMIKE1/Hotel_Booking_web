@@ -14,7 +14,7 @@ adminLogin();
   <?php require('inc/links.php'); ?>
 </head>
 
-<body class="bg-light">
+<body class="bg-cl">
   <?php require('inc/header.php'); ?>
 
   <div class="container-fluid" id="main-content">
@@ -58,10 +58,6 @@ adminLogin();
       </div>
     </div>
   </div>
-
-  <!-- Assign Room Number modal -->
-
-  
 
   <!-- Add booking form -->
   <div class="modal fade" id="add-booking" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -14,7 +14,7 @@ adminLogin();
   <?php require('inc/links.php'); ?>
 </head>
 
-<body class="bg-light">
+<body class="bg-cl">
   <?php require('inc/header.php'); ?>
 
   <div class="container-fluid" id="main-content">
@@ -23,7 +23,7 @@ adminLogin();
         <h3 class="mb-4">ROOM NUMBER</h3>
 
         <!-- features section-->
-        <div class="card border-0 shadow-sm mb-4">
+        <div class="card border-0 mb-4 bg-cl">
           <div class="card-body">
             <!-- btn search -->
             <div class="text-end mb-4">

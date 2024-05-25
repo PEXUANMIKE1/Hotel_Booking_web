@@ -3,7 +3,7 @@
   <a href="logout.php" class="btn btn-light btn-sm">LOG OUT</a>
 </div>
 
-<div class="col-lg-2 bg-white border-top border-3 border-light" id="dashboard-menu">
+<div class="col-lg-2 bg-ct border-top border-3 border-light shadow" id="dashboard-menu">
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid flex-lg-column align-items-stretch ">
       <h4 class="mt-2 text-dark">Administrator</h4>
@@ -20,7 +20,7 @@
               <span>Bookings</span>
               <span><i class="bi bi-caret-down-fill"></i></span>
             </button>
-            <div class="collapse show px-3 small mb-1" id="bookinglinks">
+            <div class="collapse px-3 small mb-1" id="bookinglinks">
               <ul class="nav nav-pills flex-column rounded border border-secondary">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="new_bookings.php">New Bookings</a>
@@ -52,7 +52,7 @@
               <span>Rooms</span>
               <span><i class="bi bi-caret-down-fill"></i></span>
             </button>
-            <div class="collapse show px-3 small mb-1" id="roomlinks">
+            <div class="collapse px-3 small mb-1" id="roomlinks">
               <ul class="nav nav-pills flex-column rounded border border-secondary">
                 <li class="nav-item">
                   <a class="nav-link text-dark" href="rooms.php">Room Type</a>

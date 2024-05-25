@@ -24,7 +24,7 @@
     }
   </style>
 </head>
-<body class="bg-light">
+<body class="bg-cl">
 
   <div class="login-form text-center rounded bg-white shadow overflow-hidden">
     <form method="POST" action="">

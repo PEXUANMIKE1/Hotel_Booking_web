@@ -11,7 +11,7 @@
   <title>Admin Panel - Carousel</title>
   <?php require('inc/links.php'); ?>
 </head>
-<body class="bg-light">
+<body class="bg-cl">
   <?php require('inc/header.php'); ?>
 
   <div class="container-fluid" id="main-content">
